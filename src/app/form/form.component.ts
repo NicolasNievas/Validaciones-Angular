@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Programador } from '../programador';
+import { Programador } from '../interfaces/programador';
 import { CommonModule } from '@angular/common';
 
 @Component({
