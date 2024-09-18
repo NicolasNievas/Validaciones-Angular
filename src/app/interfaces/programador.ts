@@ -1,4 +1,4 @@
-import { Contacto } from './contacto--skip-test';
+import { Contacto } from './contacto';
 
 export class Programador {
     nombre : string = "";

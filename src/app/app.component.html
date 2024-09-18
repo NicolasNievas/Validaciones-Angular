@@ -1,1 +1,33 @@
-<app-form></app-form>
+<app-form ></app-form>
+
+@if(lstProgramadores.length > 0){
+<hr>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre Completo</th>
+      <th scope="col">Habilidades</th>
+      <th scope="col">Email</th>
+      <th scope="col">Red Social</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for(prog of lstProgramadores; track $index){
+    <tr>
+      <th scope="row">{{$index}}</th>
+      <td>{{prog.apellido}} {{prog.nombre}}</td>
+      <td>{{prog.habilidades.join(", ")}}</td>
+      <td>{{prog.contacto.email}}</td>
+      <td>{{prog.contacto.redSocial}}</td>
+      <td><button type="button" class="btn btn-danger" (click)="eliminarProgramador($index)">-</button>
+        <!--TODO:
+        <button (click)="editar($index)">Editar</button>        
+        -->
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
+}

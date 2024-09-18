@@ -1,23 +1,24 @@
 <form class="row g-3 needs-validation" #form="ngForm" (ngSubmit)="sendForm(form)">
+  <h1>Datos del Programador</h1>
     <div class="col-md-4">
       <label for="validationCustom01" class="form-label">Nombre</label>
-      <input #nombre="ngModel" type="text" class="form-control" name="nombre" [(ngModel)]="prog.nombre" value="nombre" required>
+      <input #nombre="ngModel" type="text" class="form-control" name="nombre" [(ngModel)]="prog.nombre" value="nombre" required minlength="3">
       @if(nombre.invalid && (nombre.dirty || nombre.touched)){
         @if(nombre.getError('required')){
-            <div class="text-danger">el nombre es obligatorio</div>
+            <div class="text-danger">El nombre es obligatorio</div>
         }@else {
-            <div class="text-danger">el nombre debe tener al menos 3 caracteres</div>
+            <div class="text-danger">El nombre debe tener al menos 3 caracteres</div>
         }
       }  
     </div>
     <div class="col-md-4">
       <label for="validationCustom02" class="form-label">Apellido</label>
-      <input #apellido="ngModel" type="text" class="form-control" id="validationCustom02" name="apellido" [(ngModel)]="prog.apellido" value="apellido" required>
+      <input #apellido="ngModel" type="text" class="form-control" id="validationCustom02" name="apellido" [(ngModel)]="prog.apellido" value="apellido" required minlength="3">
         @if(apellido.invalid && (apellido.dirty || apellido.touched)){
             @if(apellido.getError('required')){
-                <div class="text-danger">el apellido es obligatorio</div>
+                <div class="text-danger">El apellido es obligatorio</div>
             }@else {
-                <div class="text-danger">el apellido debe tener al menos 3 caracteres</div>
+              <div class="text-danger">El apellido debe tener al menos 3 caracteres</div>
             }
         }
     </div>
@@ -25,11 +26,18 @@
         <label for="validationCustomUsername" class="form-label">Habilidades</label>
         <div class="input-group has-validation">
           <!-- Select para elegir habilidades -->
-          <select name="habilidades" class="form-select" [(ngModel)]="habilidadesSeleccionada">
+          <select #habilidades="ngModel" name="habilidades" class="form-select" [(ngModel)]="habilidadesSeleccionada" required>
               @for (item of listHabilidades; track $index) {
                   <option [value]="item">{{item}}</option>
               }
+              
           </select>
+          @if (habilidades.invalid && (habilidades.dirty || habilidades.touched)) {
+            @if (habilidades.getError('required')) {
+              <div class="text-danger">Seleccione una habilidad</div>
+            }
+          }
+          
           
           <!-- Botón para agregar habilidades -->
           <button type="button" (click)="agregarHabilidades()" class="btn btn-primary">+</button>
@@ -47,6 +55,30 @@
             }
           </ul>
         </div>
+      </div>
+      <hr>
+      <div ngModelGroup="contacto" class="row container mt-2">
+        <h3>Datos del contacto</h3>
+        <div class="col-md-4">
+          <label for="validationCustom02" class="form-label">Email:</label>
+          <input #email="ngModel" type="text" class="form-control" name="email" [(ngModel)]="prog.contacto.email" id="" required>
+          @if (email.invalid && (email.dirty || email.touched)) {
+            @if (email.getError('required')) {
+              <div class="text-danger">El email es obligatorio</div>
+            } @else {
+              <div class="text-danger">El email no es válido</div>
+            }
+          }
+        </div>
+        <div class="col-md-4">
+          <label for="validationCustom02" class="form-label">Red Social:</label>
+          <input #redsocial="ngModel" type="text" class="form-control" name="redSocial" [(ngModel)]="prog.contacto.redSocial" required>
+          @if (redsocial.invalid && (redsocial.dirty || redsocial.touched)) {
+            @if (redsocial.getError('required')) {
+              <div class="text-danger">La red social es obligatoria</div>
+            }
+          }
+      </div>
       </div>
     
     <div class="col-12">
