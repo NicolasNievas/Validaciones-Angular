@@ -1,0 +1,84 @@
+<div class="container mt-4">
+    <div class="row mb-3">
+        <div class="col">
+            <h2>Programadores</h2>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col">
+            <div class="input-group">
+                <!-- Filtro con un form Control Reactivo -->
+                <input type="text" class="form-control" [formControl]="filtro" placeholder="Buscar Programador">
+            </div>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" (click)="navigateToForm()">Crear Programador</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Programador</th>
+                            <th>DNI</th>
+                            <th>Habilidades</th>
+                            <th>Contacto</th>
+                            <th>Proyectos</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of ltsProgramadors; track $index) {
+                            <tr>
+                                <td> {{item.apellido}}, {{item.nombre}} </td>
+                                <td> {{item.dni}} </td>
+                                <td> {{item.habilidades}} </td>
+                                <td>
+                                    @if(item.contacto) {
+                                        <div>
+                                            <div>Email: {{item.contacto.email || 'No especificado'}}</div>
+                                            <div>
+                                                Redes: 
+                                                @if(item.contacto.redSocial && item.contacto.redSocial.length > 0) {
+                                                    @for(red of item.contacto.redSocial; track $index) {
+                                                        <span class="badge bg-secondary me-1">{{red}}</span>
+                                                    }
+                                                } @else {
+                                                    <span class="text-muted">No especificadas</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    } @else {
+                                        <span class="text-muted">Sin información de contacto</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.proyectos && item.proyectos.length > 0) {
+                                        @for (proyecto of item.proyectos; track $index) {
+                                            <div class="mb-2">
+                                                <div>Nombre: {{proyecto.nombre}}</div>
+                                                <div>Fecha de inicio: {{proyecto.fechaInicio}}</div>
+                                                <div>Fecha de fin: {{proyecto.fechaFin}}</div>
+                                            </div>
+                                        }
+                                    } @else {
+                                        <span class="text-muted me-1">Sin proyectos asignados</span>
+                                    }
+                                </td>
+                                <td>
+                                    <button class="btn btn-info me-2" type="button" (click)="viewDetail(item.id)">Detalle</button>
+                                    <button class="btn btn-warning me-2" >Editar</button>
+                                    <button class="btn btn-danger" (click)="delete(item.id)" >Eliminar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

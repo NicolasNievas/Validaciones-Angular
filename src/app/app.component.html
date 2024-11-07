@@ -1,33 +1,19 @@
-<app-form ></app-form>
-
-@if(lstProgramadores.length > 0){
-<hr>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nombre Completo</th>
-      <th scope="col">Habilidades</th>
-      <th scope="col">Email</th>
-      <th scope="col">Red Social</th>
-      <th scope="col">Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for(prog of lstProgramadores; track $index){
-    <tr>
-      <th scope="row">{{$index}}</th>
-      <td>{{prog.apellido}} {{prog.nombre}}</td>
-      <td>{{prog.habilidades.join(", ")}}</td>
-      <td>{{prog.contacto.email}}</td>
-      <td>{{prog.contacto.redSocial}}</td>
-      <td><button type="button" class="btn btn-danger" (click)="eliminarProgramador($index)">-</button>
-        <!--TODO:
-        <button (click)="editar($index)">Editar</button>        
-        -->
-      </td>
-    </tr>
-    }
-  </tbody>
-</table>
-}
+<nav class="navbar navbar-expand-lg navbar-primary justify-content bg-primary">
+  <div class="container-fluid">
+    <a href="/list" class="navbar-brand">Nav</a>
+    <button class="navbar-toggler" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedConntent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a routerLinkActive="active" routerLink="/form" class="nav-link active">Formulario</a>
+        </li>
+        <li class="nav-item">
+          <a routerLinkActive="active" routerLink="/list" class="nav-link active">Listado</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<router-outlet></router-outlet>

@@ -1,0 +1,75 @@
+<div class="container mt-4">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h3>Detalle del Programador</h3>
+        <button class="btn btn-secondary" (click)="goBack()">Volver</button>
+      </div>
+      <div class="card-body">
+        @if (programador) {
+          <div class="row">
+            <div class="col-md-6">
+              <h4>Información Personal</h4>
+              <p><strong>Nombre:</strong> {{programador.nombre}}</p>
+              <p><strong>Apellido:</strong> {{programador.apellido}}</p>
+              <p><strong>DNI:</strong> {{programador.dni}}</p>
+            </div>
+            
+            <div class="col-md-6">
+              <h4>Contacto</h4>
+              @if (programador.contacto) {
+                <p><strong>Email:</strong> {{programador.contacto.email}}</p>
+                <div>
+                  <strong>Redes Sociales:</strong>
+                  @if (programador.contacto.redSocial && programador.contacto.redSocial.length > 0) {
+                    @for (red of programador.contacto.redSocial; track $index) {
+                      <span class="badge bg-secondary me-1">{{red}}</span>
+                    }
+                  } @else {
+                    <span class="text-muted">No especificadas</span>
+                  }
+                </div>
+              } @else {
+                <p class="text-muted">Sin información de contacto</p>
+              }
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <h4>Habilidades</h4>
+              @if (programador.habilidades && programador.habilidades.length > 0) {
+                @for (habilidad of programador.habilidades; track $index) {
+                  <span class="badge bg-primary me-1">{{habilidad}}</span>
+                }
+              } @else {
+                <p class="text-muted">Sin habilidades especificadas</p>
+              }
+            </div>
+            
+            <div class="col-md-6">
+              <h4>Proyectos</h4>
+              @if (programador.proyectos && programador.proyectos.length > 0) {
+                @for (proyecto of programador.proyectos; track $index) {
+                  <div class="card mb-2">
+                    <div class="card-body">
+                      <h5 class="card-title">{{proyecto.nombre}}</h5>
+                      <p class="card-text">
+                        <small>Inicio: {{proyecto.fechaInicio | date:'dd/MM/yyyy'}}</small><br>
+                        <small>Fin: {{proyecto.fechaFin | date:'dd/MM/yyyy'}}</small>
+                      </p>
+                    </div>
+                  </div>
+                }
+              } @else {
+                <p class="text-muted">Sin proyectos asignados</p>
+              }
+            </div>
+          </div>
+        } @else {
+          <div class="alert alert-info">
+            Cargando información del programador...
+          </div>
+        }
+      </div>
+    </div>
+  </div>

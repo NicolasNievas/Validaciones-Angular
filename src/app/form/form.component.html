@@ -1,87 +1,155 @@
-<form class="row g-3 needs-validation" #form="ngForm" (ngSubmit)="sendForm(form)">
+<form class=" g-3 container mt-4" [formGroup]="form" (ngSubmit)="sendForm()">
   <h1>Datos del Programador</h1>
+  <div class="row mb-3">
     <div class="col-md-4">
-      <label for="validationCustom01" class="form-label">Nombre</label>
-      <input #nombre="ngModel" type="text" class="form-control" name="nombre" [(ngModel)]="prog.nombre" value="nombre" required minlength="3">
-      @if(nombre.invalid && (nombre.dirty || nombre.touched)){
-        @if(nombre.getError('required')){
-            <div class="text-danger">El nombre es obligatorio</div>
-        }@else {
-            <div class="text-danger">El nombre debe tener al menos 3 caracteres</div>
+      <label for="nombre" class="form-label">Nombre</label>
+      <input type="text" class="form-control" formControlName="nombre"
+        [ngClass]="{'is-invalid': form.controls['nombre'].invalid && form.controls['nombre'].touched}">
+      @if(form.controls['nombre'].invalid && form.controls['nombre'].touched){
+        @if(form.controls['nombre'].errors?.['required']){
+          <div class="text-danger">El nombre es obligatorio</div>
+        }@else if(form.controls['nombre'].errors?.['minlength']){
+          <div class="text-danger">El nombre debe tener al menos 3 caracteres</div>
         }
-      }  
+      }
     </div>
+  
     <div class="col-md-4">
-      <label for="validationCustom02" class="form-label">Apellido</label>
-      <input #apellido="ngModel" type="text" class="form-control" id="validationCustom02" name="apellido" [(ngModel)]="prog.apellido" value="apellido" required minlength="3">
-        @if(apellido.invalid && (apellido.dirty || apellido.touched)){
-            @if(apellido.getError('required')){
-                <div class="text-danger">El apellido es obligatorio</div>
-            }@else {
-              <div class="text-danger">El apellido debe tener al menos 3 caracteres</div>
+      <label for="apellido" class="form-label">Apellido</label>
+      <input type="text" class="form-control" formControlName="apellido"
+        [ngClass]="{'is-invalid': form.controls['apellido'].invalid && form.controls['apellido'].touched}">
+      @if(form.controls['apellido'].invalid && form.controls['apellido'].touched){
+        @if(form.controls['apellido'].errors?.['required']){
+          <div class="text-danger">El apellido es obligatorio</div>
+        }@else if(form.controls['apellido'].errors?.['minlength']){
+          <div class="text-danger">El apellido debe tener al menos 3 caracteres</div>
+        }
+      }
+    </div>
+  
+    <div class="col-md-4">
+      <label class="form-label">DNI</label>
+      <input type="text" class="form-control" formControlName="dni"
+        [ngClass]="{'is-invalid': form.controls['dni'].invalid && form.controls['dni'].touched}">
+      @if(form.controls['dni'].invalid && form.controls['dni'].touched){
+        @if(form.controls['dni'].errors?.['required']){
+          <div class="text-danger">El DNI es obligatorio</div>
+        }@else if(form.controls['dni'].errors?.['minlength']){
+          <div class="text-danger">El DNI debe tener al menos 8 caracteres</div>
+        } @else if (form.controls['dni'].errors?.['dniUnico']) { <!-- Verifica el DNI buscando dniUnico creado en mi metodo dniUnicoValidadr() -->
+          <div class="text-danger">El DNI ya existe</div>
+        }
+         @else {
+          <div class="text-danger">El DNI debe tener como maximo 8 caracteres</div>
+        }
+      }
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-header d-flex ">
+      <h5 class="mb-0">Habilidades</h5>
+    </div>
+    <div class="card-body">
+      <div class="col-md-12">
+        <!-- [formControl]="habilidadesSeleccionada" recibe una habilidad seleccionada -->
+         <!-- [formControl] entre corchetes para q sea dinamico y no estatico -->
+          <select class="form-select" [formControl]="habilidadesSeleccionada"> 
+            @for (item of listHabilidades; track $index) {
+              <option [value]="item">{{item}}</option>
             }
-        }
-    </div>
-    <div class="col-md-4">
-        <label for="validationCustomUsername" class="form-label">Habilidades</label>
-        <div class="input-group has-validation">
-          <!-- Select para elegir habilidades -->
-          <select #habilidades="ngModel" name="habilidades" class="form-select" [(ngModel)]="habilidadesSeleccionada" required>
-              @for (item of listHabilidades; track $index) {
-                  <option [value]="item">{{item}}</option>
-              }
-              
           </select>
-          @if (habilidades.invalid && (habilidades.dirty || habilidades.touched)) {
-            @if (habilidades.getError('required')) {
-              <div class="text-danger">Seleccione una habilidad</div>
+          <div class="mt-2" formArrayName="habilidades"> <!-- Etiqueta formArrayName igual al get del ts   -->
+            <button class="btn btn-primary" type="button" (click)="agregarHabilidad()" >+</button>
+            @for (habilidad of habilidades.controls; track $index) { <!-- habilidades.controls es el array de habilidades -->
+              <span class="badge bg-primary mt-1"> {{habilidad.value}} 
+                <button type="button" class="btn-close btn-close-white" (click)="eliminarHabilidad($index)"></button>
+              </span>
             }
-          }
-          
-          
-          <!-- Botón para agregar habilidades -->
-          <button type="button" (click)="agregarHabilidades()" class="btn btn-primary">+</button>
-        </div>
-      
-        <!-- Mostrando habilidades seleccionadas -->
-        <div class="mt-3">
-          <ul class="list-group">
-            @for (item of prog.habilidades; track $index) {
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{item}}
-                    <!-- Botón para eliminar habilidades -->
-                    <button type="button" class="btn btn-danger btn-sm" (click)="eliminarHabilidad($index)">-</button>
-                </li>
-            }
-          </ul>
-        </div>
+          </div>
       </div>
-      <hr>
-      <div ngModelGroup="contacto" class="row container mt-2">
-        <h3>Datos del contacto</h3>
-        <div class="col-md-4">
-          <label for="validationCustom02" class="form-label">Email:</label>
-          <input #email="ngModel" type="text" class="form-control" name="email" [(ngModel)]="prog.contacto.email" id="" required>
-          @if (email.invalid && (email.dirty || email.touched)) {
-            @if (email.getError('required')) {
-              <div class="text-danger">El email es obligatorio</div>
-            } @else {
-              <div class="text-danger">El email no es válido</div>
-            }
-          }
-        </div>
-        <div class="col-md-4">
-          <label for="validationCustom02" class="form-label">Red Social:</label>
-          <input #redsocial="ngModel" type="text" class="form-control" name="redSocial" [(ngModel)]="prog.contacto.redSocial" required>
-          @if (redsocial.invalid && (redsocial.dirty || redsocial.touched)) {
-            @if (redsocial.getError('required')) {
-              <div class="text-danger">La red social es obligatoria</div>
-            }
-          }
-      </div>
-      </div>
-    
-    <div class="col-12">
-      <button class="btn btn-primary" type="submit">enviar</button>
     </div>
-  </form>
+  </div>
+
+  <hr>
+
+  <div class="card mb-3">
+    <div class="card-header">
+      <h3 class="mb-0">Datos del contacto</h3>
+    </div>
+    <div class="card-body">
+      <div formGroupName="contacto" class="row container mt-2">
+        <div class="col-md-4">
+          <label class="form-label">Email:</label>
+          <input type="email" class="form-control mb-2" formControlName="email">
+        </div>
+    
+        <div formArrayName="redSocial">
+          <button type="button" class="rounded" (click)="agregarRedSocial()">
+            <span class="">Agregar Red</span>
+          </button>
+          @for (item of redSocial.controls; track $index) {
+            <div class="col-md-4">
+              <label class="form-label">Red Social:</label>
+              <input type="text" class="form-control" [formControlName]="$index" >
+            </div>
+            <button class="btn btn-close" type="button" (click)="eliminarRedSocial($index)"></button>
+          }
+        </div>
+      </div> 
+    </div>
+  </div>
+
+  <!-- FormArray de proyectos -->
+  <div class="card mb-3">
+    <!-- Header mostrando el h3 a la izquierda y boton para agregarProyecto a la izquierda -->
+    <div class="card-header d-flex justify-content-between">
+      <h3 class="mb-0">Proyectos</h3>
+      <button class="btn btn-primary btn-sm" type="button" (click)="agregarProyecto()">
+        +
+      </button>
+    </div>
+
+    <!-- Body de la card con un formArray de proyectos -->
+    <div class="card-body">
+      <div formArrayName="proyectos">
+        @for (item of proyectos.controls; track $index) {
+          <div [formGroupName]="$index">
+            <div class="col-md-4">
+              <label class="form-label">Nombre:</label>
+              <input type="text" formControlName="nombre" class="form-control">
+              <!-- validacion visual para formArray. Utilizamos 'item' ya que lo tengo definido en mi @for -->
+              @if (item.get('nombre')?.invalid && item.get('nombre')?.touched) {
+                @if (item.get('nombre')?.errors?.['required']) {
+                  <div class="text-danger">El nombre es obligatorio</div>
+                } @else if (item.get('nombre')?.errors?.['minlength']) {
+                  <div class="text-danger">El nombre debe tener al menos 3 caracteres</div>
+                } @else {
+                  <div class="text-danger">El nombre debe tener como maximo 15 caracteres</div>
+                }
+              }
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Fecha Inicio:</label>
+              <input type="date" formControlName="fechaInicio" class="form-control">
+              @if (item.get('fechaInicio')?.hasError('errorFechaInicio')) { <!-- Mensaje de error para la fecha -->
+                <div class="text-danger">La fecha de inicio no puede ser mayor a la fecha de hoy</div>
+              }
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Fecha Fin:</label>
+              <input type="date" formControlName="fechaFin" class="form-control">
+            </div>
+            <button class="btn btn-close" type="button" (click)="eliminarProyecto($index)"></button>
+            <hr>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="text-end">
+    <button class="btn btn-secondary me-2" type="button" (click)="onCancel()">Cancelar</button> <!-- BTN para redirigir a la lista -->
+    <button class="btn btn-primary" type="submit">Enviar</button>
+  </div>
+</form>

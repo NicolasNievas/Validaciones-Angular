@@ -1,4 +1,4 @@
-export class Contacto {
-    email: string ="";
-    redSocial: string ="";
+export interface Contacto {
+    email: string;
+    redSocial: string[];
 }

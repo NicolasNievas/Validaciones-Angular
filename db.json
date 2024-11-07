@@ -1,0 +1,122 @@
+{
+  "programadores": [
+    {
+      "id": "1",
+      "nombre": "Nicolas",
+      "apellido": "Nievas",
+      "dni": "12345678",
+      "habilidades": [
+        "Java",
+        " .Net",
+        " React"
+      ],
+      "contacto": {
+        "email": "nicoonievas7@gmail.com",
+        "redSocial": [
+          "git"
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "nombre": "Jorge",
+      "apellido": "Hernandez",
+      "dni": "12345678",
+      "habilidades": [
+        "Java",
+        " Angular"
+      ],
+      "contacto": {
+        "email": "jorgeh@gmail.com",
+        "redSocial": [
+          "Linkedin"
+        ]
+      }
+    },
+    {
+      "nombre": "juan",
+      "apellido": "carlo",
+      "dni": "01231300",
+      "habilidades": [
+        "React",
+        " Python"
+      ],
+      "id": "jkIA4r8"
+    },
+    {
+      "nombre": "Roberto",
+      "apellido": "Muños",
+      "dni": "32453121",
+      "habilidades": [
+        "Vue"
+      ],
+      "contacto": {
+        "email": "robertito@gmail.com",
+        "redSocial": [
+          "Instagram",
+          " GitBash"
+        ]
+      },
+      "id": "Fk2JI7C"
+    },
+    {
+      "nombre": "Agus",
+      "apellido": "Nieto",
+      "dni": "42345213",
+      "habilidades": [
+        "Java",
+        " C#"
+      ],
+      "contacto": {
+        "email": "agusnieto123@gmail.com",
+        "redSocial": [
+          "Facebook"
+        ]
+      },
+      "id": "FPKVtVW"
+    },
+    {
+      "nombre": "Roberto",
+      "apellido": "Muños",
+      "dni": "01234567",
+      "habilidades": [
+        " Angular"
+      ],
+      "contacto": {
+        "email": "roberto@gmail.com",
+        "redSocial": []
+      },
+      "proyectos": [
+        {
+          "nombre": "Proyecto 1",
+          "fechaInicio": "2024-11-07",
+          "fechaFin": "2024-11-15"
+        }
+      ],
+      "id": "MRzax2n"
+    },
+    {
+      "nombre": "jorge",
+      "apellido": "nitales ",
+      "dni": "01238743",
+      "habilidades": [
+        " Java"
+      ],
+      "contacto": {
+        "email": "genitales@hotmail.com",
+        "redSocial": [
+          "Ig",
+          "Wpp"
+        ]
+      },
+      "proyectos": [
+        {
+          "nombre": "proyecto pro",
+          "fechaInicio": "2024-11-07",
+          "fechaFin": "2024-11-14"
+        }
+      ],
+      "id": "6OR6OnN"
+    }
+  ]
+}
