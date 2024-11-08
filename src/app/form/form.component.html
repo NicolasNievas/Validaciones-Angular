@@ -66,6 +66,13 @@
                 <button type="button" class="btn-close btn-close-white" (click)="eliminarHabilidad($index)"></button>
               </span>
             }
+            <!-- Despues del @for en un FormArray se agrega la muestra del error 
+             haciendo un if de mi formulario completo 'form' y pasandole el error que decimos donde se va a almacenar
+             'unicaHabilidad' este nombre esta definido en el metodo sincronico para que no haya duplicados y 
+             se le pasa el nombre que colocamos en la etiqueta formArrayName 'habilidades'-->
+            @if (form.hasError('unicaHabilidad', 'habilidades')) {
+              <div class="alert alert-danger">La habilidad ya ha sido seleccionada</div>
+            }
           </div>
       </div>
     </div>

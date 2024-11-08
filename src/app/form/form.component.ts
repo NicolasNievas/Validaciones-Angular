@@ -29,7 +29,8 @@ export class FormComponent implements OnInit{
     apellido: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
     dni: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(8)], this.dniUnicoValidadr()),
     //FormArray ejemplo para un combo
-    habilidades: new FormArray([]), //Vacio para mandarle una coleccion de habilidades
+    //Vacio para mandarle una coleccion de habilidades y el validador unicaHabilidadValidator
+    habilidades: new FormArray([], [Validators.required, this.unicaHabilidadValidator]), 
     contacto: new FormGroup({
        email: new FormControl('', [Validators.required, Validators.email]),
        //FormArray ejemplo para enviar un string, un input
@@ -129,6 +130,16 @@ export class FormComponent implements OnInit{
       );
       */
     }
+  }
+
+  // ---------------------- Validacion Sincronica ----------------------
+
+  //Validador Sincronico para que no haya habilidades duplicadas
+  //Se coloca este metodo en el formGroup de mi formulario cuando definimos que va a ser un FormArray
+  unicaHabilidadValidator(formArray: FormArray ): ValidationErrors | null {
+    const selectedHabilidades = formArray.controls.map((control) => control.value);
+    const unicas = new Set(selectedHabilidades).size === selectedHabilidades.length;
+    return unicas ? null : {unicaHabilidad: true};
   }
 
   ngOnInit(): void {
